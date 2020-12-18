@@ -15,7 +15,7 @@
     <link href="css/swiper.css" rel="stylesheet">
 	<link href="css/magnific-popup.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
-	
+	<script type="text/javascript" src="data/d3/d3.min.js"></script>
 	<!-- Favicon  -->
     <link rel="icon" href="images/favicon.png">
 </head>
@@ -74,8 +74,8 @@
                             <img class="img-fluid" src="images/header-software-app.png">
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">VIS 1</h4>
-                            <p>DISCRIPTION 1</p>
+                            <h4 class="card-title">VISUALIZATION 1</h4>
+                            <p>A GEO PLOT OF INDIA</p>
                         </div>
                     </div>
                     <!-- end of card -->
@@ -86,8 +86,8 @@
                             <img class="img-fluid" src="images/header-software-app.png" alt="alternative">
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">VIS 2</h4>
-                            <p>DISCRIPTION 2</p>
+                            <h4 class="card-title">VISUALIZATION 2</h4>
+                            <p>A BAR PLOT OF TOP 5 STATES</p>
                         </div>
                     </div>
                     <!-- end of card -->
@@ -98,8 +98,8 @@
                             <img class="img-fluid" src="images/header-software-app.png" alt="alternative">
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">VIS 2</h4>
-                            <p>DISCRIPTION 2</p>
+                            <h4 class="card-title">VISUALIZATION 3</h4>
+                            <p>A BAR PLOT OF BOTTOM 5 STATES</p>
                         </div>
                     </div>
                     <!-- end of card -->
@@ -126,13 +126,13 @@
                     <!-- Tabs Links -->
                     <ul class="nav nav-tabs" id="argoTabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true"><i class="fas fa-list"></i>List Builder</a>
+                            <a class="nav-link active" id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true"><i class="fas fa-list"></i>GEO PLOT</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false"><i class="fas fa-envelope-open-text"></i>Campaigns</a>
+                            <a class="nav-link" id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false"><i class="fas fa-envelope-open-text"></i>BAR PLOT (MAX)</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false"><i class="fas fa-chart-bar"></i>Analytics</a>
+                            <a class="nav-link" id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false"><i class="fas fa-chart-bar"></i> BAR PLOT (MIN)</a>
                         </li>
                     </ul>
                     <!-- end of tabs links -->
@@ -145,12 +145,14 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="image-container">
-                                        <img class="img-fluid" src="images/header-software-app.png" alt="alternative">
+                                        <svg id="container" height="500" width="500">
+                                            <g id="drawSpaceMap" transform="translate(0,0)"></g>
+                                        </svg>
                                     </div> <!-- end of image-container -->
                                 </div> <!-- end of col -->
                                 <div class="col-lg-6">
                                     <div class="text-container">
-                                        <h3>List Building Is Easier Than Ever</h3>
+                                        <h3>A GEO PLOT OF INDIA</h3>
                                         <p>It's very easy to start using Tivo. You just need to fill out and submit the <a class="blue page-scroll" href="sign-up.html">Sign Up Form</a> and you will receive access to the app and all of its features in no more than 24h.</p>
                                         <ul class="list-unstyled li-space-lg">
                                             <li class="media">
@@ -183,7 +185,7 @@
                                 </div> <!-- end of col -->
                                 <div class="col-lg-6">
                                     <div class="text-container">
-                                        <h3>Campaigns Monitoring Tools</h3>
+                                        <h3>A BAR PLOT OF TOP 5 STATES</h3>
                                         <p>Campaigns monitoring is a feature we've developed since the beginning because it's at the core of Tivo and basically to any marketing activity focused on results.</p>
                                         <ul class="list-unstyled li-space-lg">
                                             <li class="media">
@@ -211,12 +213,12 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="image-container">
-                                        <img class="img-fluid" src="images/header-software-app.png" alt="alternative">
+                                        <img class="img-fluid" src="images/header-software-app.png" alt="alternative">                                        
                                     </div> <!-- end of image-container -->
                                 </div> <!-- end of col -->
                                 <div class="col-lg-6">
                                     <div class="text-container">
-                                        <h3>Analytics Control Panel</h3>
+                                        <h3>A BAR PLOT OF BOTTOM 5 STATES</h3>
                                         <p>Analytics control  panel is important for every marketing team so it's beed implemented from the begging and designed to produce reports based on very little input information.</p>
                                         <ul class="list-unstyled li-space-lg">
                                             <li class="media">
@@ -247,137 +249,6 @@
         </div> <!-- end of container -->
     </div> <!-- end of tabs -->
     <!-- end of features -->
-
-
-    <!-- Details Lightboxes -->
-    <!-- Details Lightbox 1 -->
-	<div id="details-lightbox-1" class="lightbox-basic zoom-anim-dialog mfp-hide">
-        <div class="container">
-            <div class="row">
-                <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-                <div class="col-lg-8">
-                    <div class="image-container">
-                        <img class="img-fluid" src="images/details-lightbox.png" alt="alternative">
-                    </div> <!-- end of image-container -->
-                </div> <!-- end of col -->
-                <div class="col-lg-4">
-                    <h3>List Building</h3>
-                    <hr>
-                    <h5>Core service</h5>
-                    <p>It's very easy to start using Tivo. You just need to fill out and submit the Sign Up Form and you will receive access to the app.</p>
-                    <ul class="list-unstyled li-space-lg">
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">List building framework</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Easy database browsing</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">User administration</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Automate user signup</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Quick formatting tools</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Fast email checking</div>
-                        </li>
-                    </ul>
-                    <a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a> <a class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of lightbox-basic -->
-    <!-- end of details lightbox 1 -->
-
-    <!-- Details Lightbox 2 -->
-	<div id="details-lightbox-2" class="lightbox-basic zoom-anim-dialog mfp-hide">
-        <div class="container">
-            <div class="row">
-                <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-                <div class="col-lg-8">
-                    <div class="image-container">
-                        <img class="img-fluid" src="images/details-lightbox.png" alt="alternative">
-                    </div> <!-- end of image-container -->
-                </div> <!-- end of col -->
-                <div class="col-lg-4">
-                    <h3>Campaign Monitoring</h3>
-                    <hr>
-                    <h5>Core service</h5>
-                    <p>It's very easy to start using Tivo. You just need to fill out and submit the Sign Up Form and you will receive access to the app.</p>
-                    <ul class="list-unstyled li-space-lg">
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">List building framework</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Easy database browsing</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">User administration</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Automate user signup</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Quick formatting tools</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Fast email checking</div>
-                        </li>
-                    </ul>
-                    <a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a> <a class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of lightbox-basic -->
-    <!-- end of details lightbox 2 -->
-
-    <!-- Details Lightbox 3 -->
-	<div id="details-lightbox-3" class="lightbox-basic zoom-anim-dialog mfp-hide">
-        <div class="container">
-            <div class="row">
-                <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
-                <div class="col-lg-8">
-                    <div class="image-container">
-                        <img class="img-fluid" src="images/details-lightbox.png" alt="alternative">
-                    </div> <!-- end of image-container -->
-                </div> <!-- end of col -->
-                <div class="col-lg-4">
-                    <h3>Analytics Tools</h3>
-                    <hr>
-                    <h5>Core service</h5>
-                    <p>It's very easy to start using Tivo. You just need to fill out and submit the Sign Up Form and you will receive access to the app.</p>
-                    <ul class="list-unstyled li-space-lg">
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">List building framework</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Easy database browsing</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">User administration</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Automate user signup</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Quick formatting tools</div>
-                        </li>
-                        <li class="media">
-                            <i class="fas fa-square"></i><div class="media-body">Fast email checking</div>
-                        </li>
-                    </ul>
-                    <a class="btn-solid-reg mfp-close" href="sign-up.html">SIGN UP</a> <a class="btn-outline-reg mfp-close as-button" href="#screenshots">BACK</a>
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of lightbox-basic -->
-    <!-- end of details lightbox 3 -->
-    <!-- end of details lightboxes -->
-
-
     <!-- Details -->
     <div id="details" class="basic-1">
         <div class="container">
@@ -427,6 +298,57 @@
     <script src="js/popper.min.js"></script> <!-- Popper tooltip library for Bootstrap -->
     <script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
     <script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
+    <script>
+        let drawSpaceW = 700
+        let drawSpaceH = 470
+        Promise.all([
+            d3.csv("data/literacy.csv"),
+            d3.json("data/india.geo.json")
+        ]).then((dataSources)=>{
+            let literacyInfo = dataSources[0]
+            let mapInfo = dataSources[1]
+
+            let drawSpace = d3.select("#drawSpaceMap")  
+
+            let myProjection = d3.geoMercator()
+                                .scale(700)
+                                .translate([-drawSpaceW,drawSpaceH])
+            let geoPath = d3.geoPath().projection(myProjection)
+            let dataIndex = {}
+            for( let x of literacyInfo){
+                if(x.State_UT === "Uttarakhand")
+                    x.State_UT = "Uttaranchal"
+                else if (x.State_UT === "Odisha")
+                    x.State_UT = "Orissa"
+                else if (x.State_UT === "Jammu And Kashmir")
+                    x.State_UT = "Jammu and Kashmir"
+
+                dataIndex[x.State_UT.replace("&","and")] = +x["All Schools"];
+            }
+
+            mapInfo.features = mapInfo.features.map(d =>{
+                d.properties.literacy = dataIndex[d.properties.NAME_1];
+                console.log(dataIndex[d.properties.NAME_1],d.properties.NAME_1);
+                return d;
+            })
+
+            let maxliteracy = d3.max(mapInfo.features, d=> d.properties.literacy)
+            
+            let cScale = d3.scaleLinear()
+                        .domain([0, maxliteracy])
+                        .range(["white","blue"])
+
+            drawSpace.selectAll("path")
+                .data(mapInfo.features)
+                .enter()
+                .append("path")
+                .attr("d",d=>geoPath(d))
+                .attr("stroke","black")
+                .attr("fill",d => d.properties.literacy?cScale(d.properties.literacy):"yellow") //for colored filling
+
+        })
+
+    </script>
     
 </body>
 </html>
