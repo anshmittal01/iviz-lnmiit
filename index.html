@@ -179,7 +179,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="image-container">
-                                        <svg id="drawSpaceTopBar" height="400" width="400">
+                                        <svg id="drawSpaceTopBars" height="400" width="400">
                                         </svg>
                                     </div> <!-- end of image-container -->
                                 </div> <!-- end of col -->
@@ -212,7 +212,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="image-container">
-                                        <svg id="drawSpaceBottomBar" height="400" width="400">
+                                        <svg id="drawSpaceBottomBars" height="400" width="400">
                                         </svg>                                    
                                     </div> <!-- end of image-container -->
                                 </div> <!-- end of col -->
@@ -297,142 +297,7 @@
     <script src="js/popper.min.js"></script> <!-- Popper tooltip library for Bootstrap -->
     <script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
     <script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
-    <script>
-        function drawIndiaMap() {
-            let drawSpaceW = 900
-            let drawSpaceH = 570
-            Promise.all([
-                d3.csv("data/literacy.csv"),
-                d3.json("data/indianstates_outline.geojson")
-            ]).then((dataSources)=>{
-                // Collect data sources
-                let literacyInfo = dataSources[0]
-                let mapInfo = dataSources[1]
-
-                let drawSpace = d3.select("#drawSpaceMap")  
-
-                // Choose projection
-                let myProjection = d3.geoMercator()
-                                    .scale(800)
-                                    .translate([-drawSpaceW,drawSpaceH])
-                let geoPath = d3.geoPath().projection(myProjection)
-
-                // Tweak data according to GeoJSON
-                let dataIndex = {}
-                for( let x of literacyInfo){
-                    if (x.State_UT === "Jammu And Kashmir")
-                        x.State_UT = "Jammu & Kashmir"
-                    else if (x.State_UT === "Andaman & Nicobar Islands")
-                        x.State_UT = "Andaman & Nicobar"
-                    else if (x.State_UT === "Dadra & Nagar Haveli" || x.State_UT === "Daman & Diu")
-                        x.State_UT = "Dadra and Nagar Haveli and Daman and Diu"
-
-                    dataIndex[x.State_UT] = +x["All Schools"];
-                }
-                dataIndex["Ladakh"] = dataIndex["Jammu & Kashmir"];
-
-                // Combining data with GeoJSON object 
-                mapInfo.features = mapInfo.features.map(d =>{
-
-                    d.properties.literacy = dataIndex[d.properties.ST_NM];
-                    return d;
-                })
-
-                // Defining color scale
-                let maxliteracy = d3.max(mapInfo.features, d=> d.properties.literacy)
-                let cScale = d3.scaleLinear()
-                            .domain([0, maxliteracy])
-                            .range(["white","#195e83"])
-
-                // Writing to screen
-                drawSpace.selectAll("path")
-                    .data(mapInfo.features)
-                    .enter()
-                    .append("path")
-                    .attr("d", d=>geoPath(d))
-                    .attr("stroke","black")
-                    .style("opacity", 0.7)
-                    .attr("fill", d => d.properties.literacy ? 
-                    cScale(d.properties.literacy) : // get color from value
-                    "grey") // color grey if value not found 
-
-                // Create a legend
-                mapInfo.features.sort((a,b)=>a.properties.literacy-b.properties.literacy);
-
-                bottomFive = mapInfo.features.slice(0,5).reverse();
-                topFive = mapInfo.features.slice(31,36).reverse();
-
-                cScale = d3.scaleLinear()
-                            .domain([0, maxliteracy])
-                            .range(["white","#195e83"])
-                let positionScale = d3.scaleBand()
-                                .range([0,300])
-                                .domain(topFive.map(d => d.properties.ST_NM))
-                                .padding(0.3);
-                
-                let drawSpaceTopBar = d3.select("#drawSpaceTopBar")
-                let drawSpaceBottomBar = d3.select("#drawSpaceBottomBar")
-
-                let scaleTopBar = d3.scaleLinear()
-                                .range([0,400])
-                                .domain([topFive[4].properties.literacy-40,topFive[0].properties.literacy]);
-                drawSpaceTopBar
-                        .selectAll("rect")
-                        .data(topFive)
-                        .enter()
-                        .append("rect")
-                        .attr("fill",d => "#195e83")//cScale(d.properties.literacy))
-                        .attr("width",d => scaleTopBar(d.properties.literacy)+"px")
-                        .attr("height",positionScale.bandwidth())
-                        .attr("y",d => positionScale(d.properties.ST_NM))
-                        .text((d)=>d.properties.ST_NM+" ("+d.properties.literacy + ")");
-
-                positionScale = d3.scaleBand()
-                                .range([0,300])
-                                .domain(bottomFive.map(d => d.properties.ST_NM))
-                                .padding(0.3);
-
-                let scaleBottomBar = d3.scaleLinear()
-                                .range([0,300])
-                                .domain([bottomFive[4].properties.literacy-40,bottomFive[0].properties.literacy]);
-
-                drawSpaceBottomBar
-                        .selectAll("rect")
-                        .data(bottomFive)
-                        .enter()
-                        .append("rect")
-                        .attr("fill",d => "#195e83")//cScale(d.properties.literacy))
-                        .attr("width",d => scaleBottomBar(d.properties.literacy)+"px")
-                        .attr("height",positionScale.bandwidth())
-                        .attr("y",d => positionScale(d.properties.ST_NM))
-                        .text((d)=>d.properties.ST_NM+" ("+d.properties.literacy + ")");
-            
-            })
-        }
-
-
-        // function drawBarPlots() {
-        //     let drawSpaceW = 400
-        //     let drawSpaceH = 400
-        //         // Collect data sources
-        //         d3.csv("data/literacy.csv").then((data)=>{
-
-        //         data = data.map(d => ({literacy:+d["All Schools"],state:d.State_UT}));
-
-
-        //         // console.log(data)
-
-                
-
-        //         // Create a legend
-            
-        //     })
-        // }
-
-        drawIndiaMap();
-        // drawBarPlots();
-
-    </script>
+    <script src="js/visualization.js"></script> <!-- js scripts for plotting D3 visualizations -->
     
 </body>
 </html>
