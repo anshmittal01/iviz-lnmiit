@@ -329,7 +329,6 @@
 
             mapInfo.features = mapInfo.features.map(d =>{
                 d.properties.literacy = dataIndex[d.properties.NAME_1];
-                console.log(dataIndex[d.properties.NAME_1],d.properties.NAME_1);
                 return d;
             })
 
@@ -346,6 +345,12 @@
                 .attr("d",d=>geoPath(d))
                 .attr("stroke","black")
                 .attr("fill",d => d.properties.literacy?cScale(d.properties.literacy):"yellow") //for colored filling
+
+            literacyInfo.sort(d=>+d["All Schools"]);
+            topFive = literacyInfo.slice(0,5);
+            bottomFive = literacyInfo.slice(105,110);
+            
+            console.log(topFive,bottomFive);
 
         })
 
