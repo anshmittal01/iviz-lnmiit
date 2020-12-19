@@ -8,23 +8,43 @@
  * ======================================================================== */
 
 // Global settings
-let drawSpaceW = 900
-let drawSpaceH = 570
-let themeColor = "#195e83"
+let maxColorValue = "#6155a6"
+let minColorValue = "#ffe6e6"
+
+function showMapHelper(d, i, drawSpace) {
+	let tooltip = drawSpace.select("div").append("span")
+        .attr("class", "ccc")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
+        .style("position", "absolute")
+        .style("text-align", "center")
+        .style("width", "60px")
+        .style("height", "28px")
+        .style("padding", "2px")
+        .style("font", "12px sans-serif")
+        .style("background", "lightsteelblue")
+        .style("border", "0px")
+        .style("border-radius", "8px")
+        .style("pointer-events", "none")
+        .text(i.properties.literacy)
+}
 
 function renderChloropleth(mapInfo, drawSpace) {
 
+	let drawSpaceW = 930
+	let drawSpaceH = 630
+
     // Choose projection
     let myProjection = d3.geoMercator()
-        .scale(800)
-        .translate([-drawSpaceW,drawSpaceH]) // Uses global settings set above
+        .scale(900)
+        .translate([-drawSpaceW,drawSpaceH])
     let geoPath = d3.geoPath().projection(myProjection)
 
 	// Defining color scale
     let maxliteracy = d3.max(mapInfo.features, d=> d.properties.literacy)
     let cScale = d3.scaleLinear()
         .domain([0, maxliteracy])
-        .range(["white",themeColor])
+        .range([minColorValue,maxColorValue])
 
     // Writing to screen
     drawSpace.selectAll("path")
@@ -32,34 +52,81 @@ function renderChloropleth(mapInfo, drawSpace) {
         .enter()
         .append("path")
         .attr("d", d=>geoPath(d))
-        .attr("stroke","black")
-        .style("opacity", 0.7)
-        .attr("fill", d => d.properties.literacy ? 
-        cScale(d.properties.literacy) : // get color from value
-        "grey") // color grey if value not found 
+        .attr("stroke","white")
+        .style("stroke-opacity", 0.8)
+        .attr("fill", d => cScale(d.properties.literacy))
+        .on('mouseover', function(d, i) {
+        	d3.select(this)
+        		.attr("fill", "black")
+        		.style("stroke-opacity", 1)
+        	console.log(this);
+        })
+        .on('mouseout', function(d, i) {
+        	d3.select(this)
+        		.attr("fill",d=> cScale(d.properties.literacy))
+        		.style("stroke-opacity", 0.8)
+        })  
 }
 
 function renderFiveBars(data, drawSpace) {
 
+	let chartW = 300
+	let chartH = 300
+	let xOffset = 80
+
+	drawSpace.attr("transform", "translate("+100+",0)")
+
+    console.log(data)
+    let maxliteracy = d3.max(data, d=> d.properties.literacy)
+    let cScale = d3.scaleLinear()
+        .domain([0, 100])
+        .range([minColorValue,maxColorValue])
+
     let positionScale = d3.scaleBand()
-        .range([0,300])
+        .range([0,chartH])
         .domain(data.map(d => d.properties.ST_NM))
         .padding(0.3);
 
     let scaleBar = d3.scaleLinear()
-        .range([0,400])
-        .domain([data[4].properties.literacy-40,data[0].properties.literacy]);
+        .range([0,chartW])
+        .domain([0, Math.max(15,maxliteracy)]);
 
+    // For X-axis
+    let xAxisGrid = d3.axisBottom(scaleBar).tickSize(-chartH).tickFormat('').ticks(3);
+    drawSpace
+    	.append('g')
+		.attr("class", "xAxis axis-grid")
+		.attr("transform", "translate("+xOffset+","+ chartH +")")
+		.style("stroke-opacity", "0.1")
+		.style("stroke", "black")
+		.call(xAxisGrid)
+    let xAxis = d3.axisBottom(scaleBar).ticks(3).tickFormat(d => d+" %")
+    drawSpace
+    	.append('g')
+    	.attr("class", "xAxis")
+        .attr("transform", "translate("+xOffset+","+ chartH +")")
+    	.call(xAxis)
+
+    // Plot data
     drawSpace
         .selectAll("rect")
         .data(data)
         .enter()
         .append("rect")
-        .attr("fill",d => themeColor)//cScale(d.properties.literacy))
+        .attr("fill",d => cScale(d.properties.literacy))
         .attr("width",d => scaleBar(d.properties.literacy)+"px")
         .attr("height",positionScale.bandwidth())
         .attr("y",d => positionScale(d.properties.ST_NM))
-        .text((d)=>d.properties.ST_NM+" ("+d.properties.literacy + ")");
+        .attr("x", xOffset)
+        .text((d)=>d.properties.ST_NM+" ("+d.properties.literacy + ")")
+
+    // For Y-axis
+    let yAxis = d3.axisLeft(positionScale)
+    drawSpace
+    	.append('g')
+    	.attr("class", "yAxis")
+        .attr("transform", "translate("+xOffset+", 0)")
+        .call(yAxis)
 }
 
 function collectData(dataSources) {
@@ -90,14 +157,13 @@ function collectData(dataSources) {
 
     renderChloropleth(mapInfo, d3.select("#drawSpaceMap"));
 
-    // Draw top 5 bars
-    mapInfo.features.sort((a,b)=>a.properties.literacy-b.properties.literacy);
+    mapInfo.features.sort((a,b)=> d3.descending(a.properties.literacy, b.properties.literacy));
     
-    bottomFive = mapInfo.features.slice(0,5).reverse();
-    renderFiveBars(bottomFive, d3.select("#drawSpaceBottomBars"));
-    
-    topFive = mapInfo.features.slice(31,36).reverse();
+    topFive = mapInfo.features.slice(0,5);
     renderFiveBars(topFive, d3.select("#drawSpaceTopBars"));
+
+    bottomFive = mapInfo.features.slice(-5);
+    renderFiveBars(bottomFive, d3.select("#drawSpaceBottomBars"));
 }
 
 function main() {
