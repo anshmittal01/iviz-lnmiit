@@ -300,52 +300,63 @@
     <script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
     <script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
     <script>
-        let drawSpaceW = 700
-        let drawSpaceH = 470
+        let drawSpaceW = 900
+        let drawSpaceH = 570
         Promise.all([
             d3.csv("data/literacy.csv"),
-            d3.json("data/india.geo.json")
+            d3.json("data/indianstates_outline.geojson")
         ]).then((dataSources)=>{
+            // Collect data sources
             let literacyInfo = dataSources[0]
             let mapInfo = dataSources[1]
 
             let drawSpace = d3.select("#drawSpaceMap")  
 
+            // Choose projection
             let myProjection = d3.geoMercator()
-                                .scale(700)
+                                .scale(800)
                                 .translate([-drawSpaceW,drawSpaceH])
             let geoPath = d3.geoPath().projection(myProjection)
+
+            // Tweak data according to GeoJSON
             let dataIndex = {}
             for( let x of literacyInfo){
-                if(x.State_UT === "Uttarakhand")
-                    x.State_UT = "Uttaranchal"
-                else if (x.State_UT === "Odisha")
-                    x.State_UT = "Orissa"
-                else if (x.State_UT === "Jammu And Kashmir")
-                    x.State_UT = "Jammu and Kashmir"
+                if (x.State_UT === "Jammu And Kashmir")
+                    x.State_UT = "Jammu & Kashmir"
+                else if (x.State_UT === "Andaman & Nicobar Islands")
+                    x.State_UT = "Andaman & Nicobar"
+                else if (x.State_UT === "Dadra & Nagar Haveli" || x.State_UT === "Daman & Diu")
+                    x.State_UT = "Dadra and Nagar Haveli and Daman and Diu"
 
-                dataIndex[x.State_UT.replace("&","and")] = +x["All Schools"];
+                dataIndex[x.State_UT] = +x["All Schools"];
             }
+            dataIndex["Ladakh"] = dataIndex["Jammu & Kashmir"];
 
+            // Combining data with GeoJSON object 
             mapInfo.features = mapInfo.features.map(d =>{
-                d.properties.literacy = dataIndex[d.properties.NAME_1];
-                console.log(dataIndex[d.properties.NAME_1],d.properties.NAME_1);
+                d.properties.literacy = dataIndex[d.properties.ST_NM];
                 return d;
             })
 
+            // Defining color scale
             let maxliteracy = d3.max(mapInfo.features, d=> d.properties.literacy)
-            
             let cScale = d3.scaleLinear()
                         .domain([0, maxliteracy])
-                        .range(["white","blue"])
+                        .range(["white","#195e83"])
 
+            // Writing to screen
             drawSpace.selectAll("path")
                 .data(mapInfo.features)
                 .enter()
                 .append("path")
-                .attr("d",d=>geoPath(d))
+                .attr("d", d=>geoPath(d))
                 .attr("stroke","black")
-                .attr("fill",d => d.properties.literacy?cScale(d.properties.literacy):"yellow") //for colored filling
+                .style("opacity", 0.7)
+                .attr("fill", d => d.properties.literacy ? 
+                cScale(d.properties.literacy) : // get color from value
+                "grey") // color grey if value not found 
+
+            // Create a legend
 
         })
 
