@@ -55,17 +55,48 @@ function renderChloropleth(mapInfo, drawSpace) {
         .attr("stroke","white")
         .style("stroke-opacity", 0.8)
         .attr("fill", d => cScale(d.properties.literacy))
-        .on('mouseover', function(d, i) {
-        	d3.select(this)
-        		.attr("fill", "black")
-        		.style("stroke-opacity", 1)
-        	console.log(this);
-        })
-        .on('mouseout', function(d, i) {
-        	d3.select(this)
-        		.attr("fill",d=> cScale(d.properties.literacy))
-        		.style("stroke-opacity", 0.8)
-        })  
+        .append("title").text((d)=>d.properties.ST_NM+" ("+d.properties.literacy + "%)");
+        // .on('mouseover', function(d, i) {
+        // 	d3.select(this)
+        //         .attr("fill", "black")
+        // 		.style("stroke-opacity", 1)
+        // 	console.log(this);
+        // })
+        // .on('mouseout', function(d, i) {
+        // 	d3.select(this)
+        // 		.attr("fill",d=> cScale(d.properties.literacy))
+        // 		.style("stroke-opacity", 0.8)
+        // })
+        // drawSpace.selectAll("path")
+
+    let linearGradient = drawSpace.append("defs")
+        .append("linearGradient")
+        .attr("id","linear-gradient");
+
+    linearGradient
+        .attr("x1", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
+        .attr("y2", "0%");
+
+    linearGradient.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", minColorValue); //light blue
+    
+    //Set the color for the end (100%)
+    linearGradient.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", maxColorValue); //dark blue
+
+    drawSpace.append("rect")
+        .attr("transform","translate(400,400)")
+        .attr("width", 100)
+        .attr("height", 10)
+        .style("fill", "url(#linear-gradient)");
+    legScale = d3.scaleLinear().domain([0,100]).range([0,100]);
+    legax = d3.axisBottom(legScale).ticks(3).tickFormat(d=>d+"%").tickSize(1)
+    drawSpace.append("g").attr("transform","translate(400,410)").call(legax);
+
 }
 
 function renderFiveBars(data, drawSpace) {
