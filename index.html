@@ -28,8 +28,8 @@
                 <div class="row">
                     <div class="col-lg-6 col-xl-5">
                         <div class="text-container">
-                            <h1>IVIZ Project</h1>
-                            <p class="p-large">Submitted To - Dr. Subrat K. Das</p>
+                            <h1>Information Visualization Project</h1>
+                            <p class="p-large">Faculty Mentor - Dr. Subrat K. Dash</p>
                             <p class="p-large">Team Members -</p>
                             <ul class="p-large"> 
                                 <li>17ucs028 - Ansh Mittal</li>
@@ -59,8 +59,9 @@
                     <h2 class="h2-heading">Problem Statement</h2>
                     <p class="p-heading">
                         <ol>
-                            <li>Select data set from Open Government Data (OGD) Platform India: <a class="blue page-scroll" href="https://data.gov.in/." >Dataset</a>
-                            <li> Select and create appropriate visualization using D3.js for the data and problem that you want to visualize.
+                            <li>Select data set from Open Government Data (OGD) Platform of India: We have chosen a dataset consisting of percentage of schools with computers in different states of India. The data exists for 3 years and for different levels of schools. The dataset can be found <a class="blue page-scroll" href="https://data.gov.in/major-indicator/percentage-schools-computers" target="_blank">here</a>.
+                            <li> Select and create appropriate visualization using D3.js for the data and problem that you want to visualize: We are planning to create a Chloropleth Map of India along with 2 bar chart to display the top and bottom states of India. All the graph will dispay the total school with computer facility for the academic year 2015-2016.
+                        </ol>
                     </p>
                 </div> <!-- end of col -->
                 <div></div>
@@ -74,8 +75,8 @@
                             <img class="img-fluid" src="images/header-software-app.png">
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">VISUALIZATION 1</h4>
-                            <p>A GEO PLOT OF INDIA</p>
+                            <h4 class="card-title">Chloropleth Map</h4>
+                            <p>A chloropleth plot of India consiting of the total % of schools with computer facility in academic year 2015-2016</p>
                         </div>
                     </div>
                     <!-- end of card -->
@@ -86,8 +87,8 @@
                             <img class="img-fluid" src="images/header-software-app.png" alt="alternative">
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">VISUALIZATION 2</h4>
-                            <p>A BAR PLOT OF TOP 5 STATES</p>
+                            <h4 class="card-title">Bar Plot (Top 5)</h4>
+                            <p>A bar plot showing only the top 5 states according to the total % of school with computer facility in academic year 2015-2016</p>
                         </div>
                     </div>
                     <!-- end of card -->
@@ -98,8 +99,8 @@
                             <img class="img-fluid" src="images/header-software-app.png" alt="alternative">
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">VISUALIZATION 3</h4>
-                            <p>A BAR PLOT OF BOTTOM 5 STATES</p>
+                            <h4 class="card-title">Bar Plot (Bottom 5)</h4>
+                            <p>A bar plot showing only the bottom 5 states according to the total % of school with computer facility in academic year 2015-2016</p>
                         </div>
                     </div>
                     <!-- end of card -->
@@ -116,8 +117,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="h2-heading">VISUALIZATION</h2>
-                    <p class="p-heading">DISCRPTION</p>
+                    <h2 class="h2-heading">Visualizations</h2>
+                    <!-- <p class="p-heading"></p> -->
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
             <div class="row">
@@ -126,13 +127,13 @@
                     <!-- Tabs Links -->
                     <ul class="nav nav-tabs" id="argoTabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true"><i class="fas fa-globe"></i>GEO PLOT</a>
+                            <a class="nav-link active" id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true"><i class="fas fa-globe"></i>Chloropleth Map</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false"><i class="fas fa-chart-bar"></i>BAR PLOT (MAX)</a>
+                            <a class="nav-link" id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false"><i class="fas fa-chart-bar"></i>Bar Plot (Top 5)</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false"><i class="fas fa-chart-bar"></i> BAR PLOT (MIN)</a>
+                            <a class="nav-link" id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false"><i class="fas fa-chart-bar"></i>Bar Plot (Bottom 5)</a>
                         </li>
                     </ul>
                     <!-- end of tabs links -->
@@ -145,7 +146,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="image-container">
-                                        <svg id="container" height="700" width="600" transform="translate(-80,0)">
+                                        <svg id="container" height="600" width="600" transform="translate(-80,0)">
                                             <g id="drawSpaceMap" transform="translate(0,0)"></g>
                                         </svg>
                                     </div> <!-- end of image-container -->
