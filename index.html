@@ -56,11 +56,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="h2-heading">Problem Statement</h2>
+                    <h2 class="h2-heading">Scope of the Project</h2>
                     <p class="p-heading">
-                        <ol>
-                            <li>Select data set from Open Government Data (OGD) Platform of India: We have chosen a dataset consisting of percentage of schools with computers in different states of India. The data exists for 3 years and for different levels of schools. The dataset can be found <a class="blue page-scroll" href="https://data.gov.in/major-indicator/percentage-schools-computers" target="_blank">here</a>.
-                            <li> Select and create appropriate visualization using D3.js for the data and problem that you want to visualize: We are planning to create a Chloropleth Map of India along with 2 bar chart to display the top and bottom states of India. All the graph will dispay the total school with computer facility for the academic year 2015-2016.
+                        <ol style="text-align:left">
+                            <li><b>Data Set</b>: We have chosen a dataset consisting of percentage of schools with computers in different states of India. The data exists for 3 years and for different levels of schools. The dataset can be found <a class="blue page-scroll" href="https://data.gov.in/major-indicator/percentage-schools-computers" target="_blank">here</a>.</li>
+                            <li><b>Problem Statement</b>: We want to analyze the geographical trend of the schools having computer facilities. We should be able to see if the location of the school play any role with computer facilities.</li>
+                            <li><b>Visualizations</b>: We are planning to create a Chloropleth Map of India along with 2 bar chart to display the top and bottom states of India. All the graph will dispay the percentage of all schools with computer facility for the academic year 2015-2016.</li>
                         </ol>
                     </p>
                 </div> <!-- end of col -->
@@ -118,7 +119,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h2 class="h2-heading">Visualizations</h2>
-                    <!-- <p class="p-heading"></p> -->
+                    <p class="p-heading">The number of schools may vary in different regions hence the absolute number of schools in plotting is not of much use. Thus the dataset is already given to us in the form of percentages. We are just selecting the column where the data is shown for all the schools in total and the rows for academic year 2015-2016 so that the latest data is visualized as desired.</p>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
             <div class="row">
@@ -160,35 +161,35 @@
                                     <div class="text-container">
                                         <h3>A Chloropleth Map of India</h3>
                                         <p>When we look at a spatial data we always want to see that wheather the location or area play any significant role to our reading. Chloropleth map helps us to analyze the same data. We wanted to check/explore wheather the usage of computers overall is affected by the location or not. Chloropleth Maps are basically color map in which the color is according to the value associated with the entity</p>
-                                        <h4>Pros - </h4>
+                                        <h4>Pros</h4>
                                         <ul class="list-unstyled li-space-lg">
                                             <li class="media">
                                                 <i class="fas fa-square"></i>
-                                                <div class="media-body">Our dataset contains data of only indian states so we are focusing only on India and have pl</div>
+                                                <div class="media-body">Our dataset contains data of only Indian states so we are focusing only on India and have plotted only the Indian states with disputed areas for <b>saliency</b>.</div>
                                             </li>
                                             <li class="media">
                                                 <i class="fas fa-square"></i>
-                                                <div class="media-body">Manage forms and landing pages for your services</div>
+                                                <div class="media-body">We have chosen baby pink as our base color rather than white so that it can be easily <b>differentiated</b> from the background. This also makes our plot colorblind safe.</div>
                                             </li>
                                             <li class="media">
                                                 <i class="fas fa-square"></i>
-                                                <div class="media-body">Add and remove subscribers using the control panel</div>
+                                                <div class="media-body">Chloropleth map allows us to only observe the trend in magnitude and not the absolute values thats why we have created an interactive feature in the map that the name of state along with the value associated with it is displayed in a tooltip. This increases the <b>accuracy</b> of the plot and amplifies the viewers <b>Cognition</b>.</div>
                                             </li>
                                         </ul>
-                                        <h4>Cons - </h4>
+                                        <h4>Cons</h4>
                                         <ul class="list-unstyled li-space-lg">
                                             <li class="media">
                                                 <i class="fas fa-square"></i>
-                                                <div class="media-body">Create and embed on websites newsletter sign up forms</div>
+                                                <div class="media-body">Chloropleth does not allow for direct comparison between the states thus we are complementing our plot with bar graphs that directly compare the leading and trailing states.</div>
                                             </li>
-                                            <li class="media">
+                                            <!-- <li class="media">
                                                 <i class="fas fa-square"></i>
                                                 <div class="media-body">Manage forms and landing pages for your services</div>
                                             </li>
                                             <li class="media">
                                                 <i class="fas fa-square"></i>
                                                 <div class="media-body">Add and remove subscribers using the control panel</div>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div> <!-- end of text-container -->
                                 </div> <!-- end of col -->
@@ -207,26 +208,44 @@
                                         			Top 5 Schools With Computer Facility Percent (2015-16)
                                         		</text>
                                         	</g>
-                                        	<g id="drawSpaceTopBars" transform="translate(0,50)"></g>
+                                            <g id="drawSpaceTopBars" transform="translate(0,50)"></g>
+                                            <g id="topFivexAxis" transform="translate(20,385)">
+                                        		<text x="300" y="0" text-anchor="middle" font-size="10px" fill="black" opacity="0.8">
+                                        			Percentage of Schools With Computer Facility
+                                        		</text>
+                                            </g>
+                                            <g id="topFiveyAxis" transform="translate(100,500) rotate(270)">
+                                        		<text x="300" y="0" text-anchor="middle" font-size="10px" fill="black" opacity="0.8">
+                                        			States
+                                        		</text>
+                                        	</g>
                                         </svg>
                                     </div> <!-- end of image-container -->
                                 </div> <!-- end of col -->
                                 <div class="col-lg-6">
                                     <div class="text-container">
-                                        <h3>A BAR PLOT OF TOP 5 STATES</h3>
-                                        <p>Campaigns monitoring is a feature we've developed since the beginning because it's at the core of Tivo and basically to any marketing activity focused on results.</p>
+                                        <h3>A Bar Plot Of Top 5 States</h3>
+                                        <p>To compare the absolute values of the different states the chloropleth map does not give proper measures. Hence we have made two different bar plots so that our viewers can go for direct comaprison between the two. We have gone for two different plots due to the variation in scale. If we were taking the complete scale the trend was not properly visible hence we decided to split this into two subplots. By this we are able to observe the trend more easily.</p>
+                                        <h4>Pros</h4>
                                         <ul class="list-unstyled li-space-lg">
                                             <li class="media">
                                                 <i class="fas fa-square"></i>
-                                                <div class="media-body">Easily plan campaigns and schedule their starting date</div>
+                                                <div class="media-body">The absolute values of the top 5 states can be compared easily.</div>
                                             </li>
                                             <li class="media">
                                                 <i class="fas fa-square"></i>
-                                                <div class="media-body">Start campaigns and follow their evolution closely</div>
+                                                <div class="media-body">We have maintained the same color pallete so that it does not create a sense of confusion in the mind of our viewers.</div>
                                             </li>
                                             <li class="media">
                                                 <i class="fas fa-square"></i>
-                                                <div class="media-body">Evaluate campaign results and optimize future actions</div>
+                                                <div class="media-body">We have added grids along with support for hover so that the viewers can get the absolute values according to his/her convinience.</div>
+                                            </li>
+                                        </ul>
+                                        <h4>Cons</h4>
+                                        <ul class="list-unstyled li-space-lg">
+                                            <li class="media">
+                                                <i class="fas fa-square"></i>
+                                                <div class="media-body">Top 5 and bottom 5 states are not comparable with each other. This can be solved by plotting both top 5 and bottom 5 in the same bar plot but this hinders with our main motive as mentioned above.</div>
                                             </li>
                                         </ul>
                                     </div> <!-- end of text-container -->
@@ -246,26 +265,44 @@
                                         			Bottom 5 Schools With Computer Facility Percent (2015-16)
                                         		</text>
                                         	</g>
-                                        	<g id="drawSpaceBottomBars" transform="translate(0,50)"></g>
+                                            <g id="drawSpaceBottomBars" transform="translate(0,50)"></g>
+                                            <g id="bottomFivexAxis" transform="translate(20,385)">
+                                        		<text x="300" y="0" text-anchor="middle" font-size="10px" fill="black" opacity="0.8">
+                                        			Percentage of Schools With Computer Facility
+                                        		</text>
+                                            </g>
+                                            <g id="bottomFiveyAxis" transform="translate(100,500) rotate(270)">
+                                        		<text x="300" y="0" text-anchor="middle" font-size="10px" fill="black" opacity="0.8">
+                                        			States
+                                        		</text>
+                                        	</g>
                                         </svg>                                    
                                     </div> <!-- end of image-container -->
                                 </div> <!-- end of col -->
                                 <div class="col-lg-6">
                                     <div class="text-container">
-                                        <h3>A BAR PLOT OF BOTTOM 5 STATES</h3>
-                                        <p>Analytics control  panel is important for every marketing team so it's beed implemented from the begging and designed to produce reports based on very little input information.</p>
+                                        <h3>A Bar Plot Of Bottom 5 States</h3>
+                                        <p>To compare the absolute values of the different states the chloropleth map does not give proper measures. Hence we have made two different bar plots so that our viewers can go for direct comaprison between the two. We have gone for two different plots due to the variation in scale. If we were taking the complete scale the trend was not properly visible hence we decided to split this into two subplots. By this we are able to observe the trend more easily.</p>
+                                        <h4>Pros</h4>
                                         <ul class="list-unstyled li-space-lg">
                                             <li class="media">
                                                 <i class="fas fa-square"></i>
-                                                <div class="media-body">If you set it up correctly you will get acces to great intel</div>
+                                                <div class="media-body">The absolute values of the bottom 5 states can be compared easily.</div>
                                             </li>
                                             <li class="media">
                                                 <i class="fas fa-square"></i>
-                                                <div class="media-body">Easy to integrate in your websites and landing pages</div>
+                                                <div class="media-body">We have maintained the same color pallete so that it does not create a sense of confusion in the mind of our viewers.</div>
                                             </li>
                                             <li class="media">
                                                 <i class="fas fa-square"></i>
-                                                <div class="media-body">The generated reports are important for your strategy</div>
+                                                <div class="media-body">We have added grids along with support for hover so that the viewers can get the absolute values according to his/her convinience.</div>
+                                            </li>
+                                        </ul>
+                                        <h4>Cons</h4>
+                                        <ul class="list-unstyled li-space-lg">
+                                            <li class="media">
+                                                <i class="fas fa-square"></i>
+                                                <div class="media-body">Top 5 and bottom 5 states are not comparable with each other. This can be solved by plotting both top 5 and bottom 5 in the same bar plot but this hinders with our main motive as mentioned above.</div>
                                             </li>
                                         </ul>
                                     </div> <!-- end of text-container -->
@@ -288,19 +325,29 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="text-container">
-                        <h2>CONCLUSION</h2>
-                        <p>BLAH BLAH BLAH</p>
+                        <h2>References</h2>
                         <ul class="list-unstyled li-space-lg">
                             <li class="media">
                                 <i class="fas fa-square"></i>
-                                <div class="media-body">Understand customers and meet their requirements</div>
+                                <div class="media-body">We have taken the GeoJson file from <a class="blue page-scroll" href="http://projects.datameet.org/maps/states/#india-state-boundaries" target="_blank">Data Meet</a>.</div>
                             </li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
-                                <div class="media-body">Targeted client base with Tivo's efficient technology</div>
+                                <div class="media-body">We have taken the help for color legend from <a class="blue page-scroll" href="https://www.visualcinnamon.com/2016/05/smooth-color-legend-d3-svg-gradient" target="_blank">Visual Cinnamon</a>.</div>
+                            </li>
+                            <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">We have taken the page template from <a class="blue page-scroll" href="https://onepagelove.com/tivo" target="_blank">One Page Love</a>.</div>
+                            </li>
+                            <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">We learnt about D3.js from <a class="blue page-scroll" href="https://www.coursera.org/specializations/information-visualization" target="_blank">Information Visualization Specialization</a> and classes by Dr. Subrat K. Dash.</div>
+                            </li>
+                            <li class="media">
+                                <i class="fas fa-square"></i>
+                                <div class="media-body">We have taken help for ad-hoc problems from <a class="blue page-scroll" href="https://www.w3schools.com/" target="_blank">W3 Schools</a> and <a class="blue page-scroll" href="https://stackoverflow.com/" target="_blank">Stack Overflow</a>.</div>
                             </li>
                         </ul>
-                        <a class="btn-solid-reg page-scroll" href="sign-up.html">SIGN UP</a>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
                 <div class="col-lg-6">
