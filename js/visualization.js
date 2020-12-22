@@ -11,23 +11,6 @@
 let maxColorValue = "#6155a6"
 let minColorValue = "#ffe6e6"
 
-function showMapHelper(d, i, drawSpace) {
-	let tooltip = drawSpace.select("div").append("span")
-        .attr("class", "ccc")
-        .style("z-index", "10")
-        .style("visibility", "hidden")
-        .style("position", "absolute")
-        .style("text-align", "center")
-        .style("width", "60px")
-        .style("height", "28px")
-        .style("padding", "2px")
-        .style("font", "12px sans-serif")
-        .style("background", "lightsteelblue")
-        .style("border", "0px")
-        .style("border-radius", "8px")
-        .style("pointer-events", "none")
-        .text(i.properties.literacy)
-}
 
 function renderChloropleth(mapInfo, drawSpace) {
 
@@ -55,48 +38,56 @@ function renderChloropleth(mapInfo, drawSpace) {
         .attr("stroke","white")
         .style("stroke-opacity", 0.8)
         .attr("fill", d => cScale(d.properties.literacy))
-        .append("title").text((d)=>d.properties.ST_NM+" ("+d.properties.literacy + "%)");
-        // .on('mouseover', function(d, i) {
-        // 	d3.select(this)
-        //         .attr("fill", "black")
-        // 		.style("stroke-opacity", 1)
-        // 	console.log(this);
-        // })
-        // .on('mouseout', function(d, i) {
-        // 	d3.select(this)
-        // 		.attr("fill",d=> cScale(d.properties.literacy))
-        // 		.style("stroke-opacity", 0.8)
-        // })
-        // drawSpace.selectAll("path")
+        // Adding colour change on hover 
+        .on('mouseover', function(d, i) {
+        	d3.select(this)
+                .attr("fill", "#a65571")
+                .style("stroke", "grey")
+        		.style("stroke-opacity", 1)
+        })
+        .on('mouseout', function(d, i) {
+        	d3.select(this)
+        		.attr("fill",d=> cScale(d.properties.literacy))
+                .style("stroke", "white")
+        		.style("stroke-opacity", 0.8)
+        })
+        // Adding Hover tooltip
+        .append("title") 
+        .text((d)=>d.properties.ST_NM+" ("+d.properties.literacy + "%)");
 
+    // Building legend
     let linearGradient = drawSpace.append("defs")
         .append("linearGradient")
         .attr("id","linear-gradient");
-
     linearGradient
         .attr("x1", "0%")
         .attr("y1", "0%")
         .attr("x2", "100%")
         .attr("y2", "0%");
-
     linearGradient.append("stop")
         .attr("offset", "0%")
-        .attr("stop-color", minColorValue); //light blue
-    
-    //Set the color for the end (100%)
+        .attr("stop-color", minColorValue); // using global setting
     linearGradient.append("stop")
         .attr("offset", "100%")
-        .attr("stop-color", maxColorValue); //dark blue
-
+        .attr("stop-color", maxColorValue); // using global setting
+    // set legend shape & scale 
     drawSpace.append("rect")
         .attr("transform","translate(400,400)")
         .attr("width", 100)
         .attr("height", 10)
         .style("fill", "url(#linear-gradient)");
-    legScale = d3.scaleLinear().domain([0,100]).range([0,100]);
-    legax = d3.axisBottom(legScale).ticks(3).tickFormat(d=>d+"%").tickSize(1)
-    drawSpace.append("g").attr("transform","translate(400,410)").call(legax);
-
+    legScale = d3.scaleLinear()
+        .domain([0,100])
+        .range([0,100]);
+    legax = d3.axisBottom(legScale)
+        .ticks(3)
+        .tickFormat(d=>d+"%")
+        .tickSize(1)
+    // Writing legend to screen
+    drawSpace
+        .append("g")
+        .attr("transform","translate(400,410)")
+        .call(legax);
 }
 
 function renderFiveBars(data, drawSpace) {
@@ -105,9 +96,8 @@ function renderFiveBars(data, drawSpace) {
 	let chartH = 300
 	let xOffset = 80
 
-	drawSpace.attr("transform", "translate("+100+",0)")
+	drawSpace.attr("transform", "translate("+100+",50)")
 
-    console.log(data)
     let maxliteracy = d3.max(data, d=> d.properties.literacy)
     let cScale = d3.scaleLinear()
         .domain([0, 100])
@@ -150,6 +140,18 @@ function renderFiveBars(data, drawSpace) {
         .attr("y",d => positionScale(d.properties.ST_NM))
         .attr("x", xOffset)
         .text((d)=>d.properties.ST_NM+" ("+d.properties.literacy + ")")
+        // Adding colour change on hover 
+        .on('mouseover', function(d, i) {
+            d3.select(this)
+                .attr("fill", "#a65571")
+        })
+        .on('mouseout', function(d, i) {
+            d3.select(this)
+                .attr("fill",d=> cScale(d.properties.literacy))
+        })
+        // Adding Hover tooltip
+        .append("title") 
+        .text((d)=>d.properties.ST_NM+" ("+d.properties.literacy + "%)");
 
     // For Y-axis
     let yAxis = d3.axisLeft(positionScale)
